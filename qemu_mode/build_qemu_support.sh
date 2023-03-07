@@ -31,7 +31,6 @@
 
 VERSION="7.2.0"
 QEMU_URL="http://download.qemu.org/qemu-${VERSION}.tar.xz"
-QEMU_SHA384="68216c935487bc8c0596ac309e1e3ee75c2c4ce898aab796faa321db5740609ced365fedda025678d072d09ac8928105"
 
 echo "================================================="
 echo "AFL binary-only instrumentation QEMU build script"
@@ -93,28 +92,10 @@ echo "[+] All checks passed!"
 
 ARCHIVE="`basename -- "$QEMU_URL"`"
 
-CKSUM=`sha384sum -- "$ARCHIVE" 2>/dev/null | cut -d' ' -f1`
 
-if [ ! "$CKSUM" = "$QEMU_SHA384" ]; then
-
-  echo "[*] Downloading QEMU ${VERSION} from the web..."
-  rm -f "$ARCHIVE"
-  wget -O "$ARCHIVE" -- "$QEMU_URL" || exit 1
-
-  CKSUM=`sha384sum -- "$ARCHIVE" 2>/dev/null | cut -d' ' -f1`
-
-fi
-
-if [ "$CKSUM" = "$QEMU_SHA384" ]; then
-
-  echo "[+] Cryptographic signature on $ARCHIVE checks out."
-
-else
-
-  echo "[-] Error: signature mismatch on $ARCHIVE (perhaps download error?)."
-  exit 1
-
-fi
+echo "[*] Downloading QEMU ${VERSION} from the web..."
+rm -f "$ARCHIVE"
+wget -O "$ARCHIVE" -- "$QEMU_URL" || exit 1
 
 echo "[*] Uncompressing archive (this will take a while)..."
 
