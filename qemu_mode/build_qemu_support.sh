@@ -29,7 +29,7 @@
 #
 
 
-VERSION="7.2.0"
+VERSION="2.10.0"
 QEMU_URL="http://download.qemu.org/qemu-${VERSION}.tar.xz"
 
 echo "================================================="
